@@ -1,0 +1,20 @@
+.block {
+  display: flex;
+  margin-bottom: 8px;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  border: 1px solid greenyellow;
+  border-radius: 8px;
+}
+
+.contactDetail {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonDelete {
+  height: 18px;
+  display: flex;
+  align-items: center;
+}
