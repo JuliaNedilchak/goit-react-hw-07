@@ -4,8 +4,10 @@ import ContactList from "./components/ContactList/ContactList";
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
-import { addContact, deleteContact } from "./redux/contactsSlice";
+import { deleteContact } from "../src/redux/contactsOps";
 import { changeFilter } from "./redux/filtersSlice";
+import { addContact } from "./redux/contactsOps/";
+import { fetchContacts } from "./redux/contactsOps";
 
 const App = () => {
   /* const initialContactList = [
@@ -24,20 +26,32 @@ const App = () => {
   const selectContacts = useSelector((state) => {
     return state.contactbox.contacts.items;
   });
+  const isLoading = useSelector((state) => {
+    return state.contactbox.contacts.loading;
+  });
+  const isError = useSelector((state) => {
+    return state.contactbox.contacts.error;
+  });
   const selectNameFilter = useSelector((state) => {
     return state.filterbox.filters.name;
   });
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
   //useEffect(() => {
   //localStorage.setItem("contacts", JSON.stringify(contacts));
   //}, [contacts]);
+  //useEffect(() => {
+  //dispatch(fetchContacts);
+  //}, [dispatch]);
 
   const onAddContact = (formData) => {
-    const newList = {
-      ...formData,
-      id: nanoid(),
-    };
+    //const newList = {
+    //...formData,
+    //id: nanoid(),
+    //};
 
-    dispatch(addContact(newList));
+    dispatch(addContact(formData));
     // setContacts([...contacts, newList]);
   };
 

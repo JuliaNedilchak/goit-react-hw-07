@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { apiRequestContacts } from "./contactsOps";
+import { addContact, deleteContact, fetchContacts } from "./contactsOps";
 
 const INITIAL_STATE = {
   contacts: {
@@ -18,17 +18,33 @@ const contactsSlice = createSlice({
   initialState: INITIAL_STATE, // Об'єкт редюсерів
   extraReducers: (builder) =>
     builder
-      .addCase(apiRequestContacts.pending, (state) => {
+      .addCase(fetchContacts.pending, (state) => {
         state.contacts.loading = true;
         state.contacts.error = null;
       })
-      .addCase(apiRequestContacts.fulfilled, (state, action) => {
+      .addCase(fetchContacts.fulfilled, (state, action) => {
         state.contacts.loading = false;
         state.contacts.items = action.payload;
       })
-      .addCase(apiRequestContacts.rejected, (state) => {
+      .addCase(fetchContacts.rejected, (state) => {
         state.contacts.loading = false;
         state.contacts.error = true;
+      })
+      .addCase(addContact.pending, (state) => {
+        state.contacts.loading = true;
+        state.contacts.error = null;
+      })
+      .addCase(addContact.fulfilled, (state, action) => {
+        state.contacts.items.push(action.payload);
+      })
+      .addCase(deleteContact.pending, (state) => {
+        state.contacts.loading = true;
+        state.contacts.error = null;
+      })
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        state.contacts.items = state.contacts.items.filter(
+          (contact) => contact.id !== action.payload.id
+        );
       }),
 
   /*reducers: {
