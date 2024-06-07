@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { changeFilter } from "../../redux/filtersSlice";
+import { changeFilter, selectFilteredContacts } from "../../redux/filtersSlice";
 
 const SearchBox = () => {
-  const selectNameFilter = useSelector((state) => state.filterbox.filters.name);
+  const selectNameFilter = useSelector(selectFilteredContacts);
   const dispatch = useDispatch();
   const onChangeContact = (event) => {
     dispatch(changeFilter(event.target.value));

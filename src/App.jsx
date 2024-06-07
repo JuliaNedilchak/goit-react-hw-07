@@ -1,13 +1,20 @@
 import ContactForm from "./components/ContactForm/ContactForm";
 import SearchBox from "./components/SearchBox/SearchBox";
 import ContactList from "./components/ContactList/ContactList";
-import { useEffect, useState } from "react";
-import { nanoid } from "nanoid";
+import { useEffect } from "react";
+//import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteContact } from "../src/redux/contactsOps";
-import { changeFilter } from "./redux/filtersSlice";
+import { changeFilter, selectFilteredContacts } from "./redux/filtersSlice";
 import { addContact } from "./redux/contactsOps/";
 import { fetchContacts } from "./redux/contactsOps";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import {
+  selectContactsList,
+  selectError,
+  selectIsLoading,
+} from "./redux/contactsSlice";
+import Loader from "./components/Loader/Loader";
 
 const App = () => {
   /* const initialContactList = [
@@ -23,18 +30,10 @@ const App = () => {
   //return parsed;
   //});
   const dispatch = useDispatch();
-  const selectContacts = useSelector((state) => {
-    return state.contactbox.contacts.items;
-  });
-  const isLoading = useSelector((state) => {
-    return state.contactbox.contacts.loading;
-  });
-  const isError = useSelector((state) => {
-    return state.contactbox.contacts.error;
-  });
-  const selectNameFilter = useSelector((state) => {
-    return state.filterbox.filters.name;
-  });
+  const selectContacts = useSelector(selectContactsList);
+  const isLoading = useSelector(selectIsLoading);
+  const isError = useSelector(selectError);
+  const selectNameFilter = useSelector(selectFilteredContacts);
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
@@ -72,6 +71,8 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      {isLoading && <Loader />}
+      {isError && <ErrorMessage />}
       <ContactForm />
       <SearchBox />
       <ContactList />

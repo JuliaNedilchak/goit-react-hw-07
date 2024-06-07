@@ -26,15 +26,16 @@ const contactsSlice = createSlice({
         state.contacts.loading = false;
         state.contacts.items = action.payload;
       })
-      .addCase(fetchContacts.rejected, (state) => {
+      .addCase(fetchContacts.rejected, (state, action) => {
         state.contacts.loading = false;
-        state.contacts.error = true;
+        state.contacts.error = action.payload;
       })
       .addCase(addContact.pending, (state) => {
         state.contacts.loading = true;
         state.contacts.error = null;
       })
       .addCase(addContact.fulfilled, (state, action) => {
+        state.contacts.loading = false;
         state.contacts.items.push(action.payload);
       })
       .addCase(deleteContact.pending, (state) => {
@@ -42,6 +43,7 @@ const contactsSlice = createSlice({
         state.contacts.error = null;
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
+        state.contacts.loading = false;
         state.contacts.items = state.contacts.items.filter(
           (contact) => contact.id !== action.payload.id
         );
@@ -61,6 +63,8 @@ const contactsSlice = createSlice({
 
 // Генератори екшенів
 //export const { addContact, deleteContact } = contactsSlice.actions;
-
+export const selectContactsList = (state) => state.contactbox.contacts.items;
+export const selectIsLoading = (state) => state.contactbox.contacts.loading;
+export const selectError = (state) => state.contactbox.contacts.error;
 // Редюсер слайсу
 export const contactsReducer = contactsSlice.reducer;

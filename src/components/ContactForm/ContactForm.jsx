@@ -3,6 +3,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { addContact } from "../../redux/contactsOps";
+//import Loader from "../Loader/Loader";
+//import { selectError, selectIsLoading } from "../../redux/contactsSlice";
 
 const contactSchema = Yup.object({
   name: Yup.string()
@@ -18,7 +20,10 @@ const INITIAL_VALUES = {
   name: "",
   number: "",
 };
+
 const ContactForm = () => {
+  //const isLoading = useSelector(selectIsLoading);
+  //const isError = useSelector(selectError);
   const dispatch = useDispatch();
   const submitForm = (values, actions) => {
     //const newList = {
@@ -33,29 +38,31 @@ const ContactForm = () => {
   };
 
   return (
-    <Formik
-      initialValues={INITIAL_VALUES}
-      onSubmit={submitForm}
-      validationSchema={contactSchema}
-    >
-      <Form>
-        <label>
-          <span>Name</span>
+    <div>
+      <Formik
+        initialValues={INITIAL_VALUES}
+        onSubmit={submitForm}
+        validationSchema={contactSchema}
+      >
+        <Form>
+          <label>
+            <span>Name</span>
+            <br />
+            <Field type="text" name="name" />
+            <ErrorMessage component="p" name="name" />
+          </label>
           <br />
-          <Field type="text" name="name" />
-          <ErrorMessage component="p" name="name" />
-        </label>
-        <br />
-        <label>
-          <span>Number</span>
+          <label>
+            <span>Number</span>
+            <br />
+            <Field type="number" name="number" />
+            <ErrorMessage component="p" name="number" />
+          </label>
           <br />
-          <Field type="number" name="number" />
-          <ErrorMessage component="p" name="number" />
-        </label>
-        <br />
-        <button type="submit">Add contact</button>
-      </Form>
-    </Formik>
+          <button type="submit">Add contact</button>
+        </Form>
+      </Formik>
+    </div>
   );
 };
 
