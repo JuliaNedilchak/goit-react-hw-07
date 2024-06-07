@@ -5,7 +5,7 @@ import { useEffect } from "react";
 //import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteContact } from "../src/redux/contactsOps";
-import { changeFilter, selectFilteredContacts } from "./redux/filtersSlice";
+import { changeFilter, selectFiltered } from "./redux/filtersSlice";
 import { addContact } from "./redux/contactsOps/";
 import { fetchContacts } from "./redux/contactsOps";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
@@ -33,7 +33,7 @@ const App = () => {
   const selectContacts = useSelector(selectContactsList);
   const isLoading = useSelector(selectIsLoading);
   const isError = useSelector(selectError);
-  const selectNameFilter = useSelector(selectFilteredContacts);
+  const selectNameFilter = useSelector(selectFiltered);
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);

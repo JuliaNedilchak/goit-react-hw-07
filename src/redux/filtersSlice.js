@@ -22,6 +22,6 @@ const filtersSlice = createSlice({
 
 // Генератори екшенів
 export const { changeFilter } = filtersSlice.actions;
-export const selectFilteredContacts = (state) => state.filterbox.filters.name;
+export const selectFiltered = (state) => state.filterbox.filters.name;
 // Редюсер слайсу
 export const filterReducer = filtersSlice.reducer;

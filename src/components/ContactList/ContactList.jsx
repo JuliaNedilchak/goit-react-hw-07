@@ -1,14 +1,26 @@
 import { useSelector } from "react-redux";
 import Contact from "../Contact/Contact";
-import { selectContactsList } from "../../redux/contactsSlice";
-import { selectFilteredContacts } from "../../redux/filtersSlice";
+import {
+  selectContactsList,
+  selectFilteredContacts,
+} from "../../redux/contactsSlice";
+import { selectFiltered } from "../../redux/filtersSlice";
+//import { useMemo } from "react";
 
 const ContactList = () => {
   const selectContacts = useSelector(selectContactsList);
-  const selectNameFilter = useSelector(selectFilteredContacts);
-  const filteredContacts = selectContacts.filter((contact) =>
-    contact.name.toLowerCase().includes(selectNameFilter.toLowerCase())
-  );
+  const selectNameFilter = useSelector(selectFiltered);
+  const filteredContacts = useSelector(selectFilteredContacts);
+  //const filteredContacts = selectContacts.filter((contact) =>
+  //contact.name.toLowerCase().includes(selectNameFilter.toLowerCase())
+  //);
+  /*const filteredContacts = useMemo(() => {
+    selectContacts.filter((contact) => {
+      return contact.name
+        .toLowerCase()
+        .includes(selectNameFilter.toLowerCase());
+    });*/
+  //}, [selectContacts, selectNameFilter]);
   return (
     <ul>
       {filteredContacts.map((contact) => {
